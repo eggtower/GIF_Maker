@@ -9,7 +9,7 @@ def make_gif(clipPath, savePath):
     frameList = list()
     
     clip = cv2.VideoCapture(clipPath)
-    fps = clip.get(5) # 影片 fps
+    # fps = clip.get(5) # 影片 fps
     frames = int(clip.get(cv2.CAP_PROP_FRAME_COUNT)) # 影片總幀數
     width, height = clip.get(3), clip.get(4) # 影片寬度,高度
     reSize = (int(width/height*450), 450) # 調整大小, 高固定 450
@@ -32,7 +32,7 @@ def make_gif(clipPath, savePath):
             frameList.append(frame)
     clip.release()
     frameList[0].save(savePath, format="GIF", append_images=frameList[1:],
-                      save_all=True, duration=fps/4, loop=0, disposal=2)
+                      save_all=True, duration=4, loop=0, disposal=2)
                       
 def main():
     if not os.path.exists('clips'):

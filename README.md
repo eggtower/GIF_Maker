@@ -7,11 +7,11 @@ For making Namin's GIF.
 ## Instructions
 * Create virtual env.
 ```
-conda create --name <env_name> python=3.7
+conda create --name GIF_Maker python=3.7
 ```
 * Enter the virtual env.
 ```
-conda activate <env_name>
+conda activate GIF_Maker
 ```
 * Install dependencies
 ```

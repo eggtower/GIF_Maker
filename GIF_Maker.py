@@ -37,13 +37,13 @@ def make_gif(clipPath, savePath):
 def main():
     if not os.path.exists('clips'):
         print("There is no 'clips' folder")
-
+        return
     if os.path.exists('GIF'): shutil.rmtree("GIF")
     try:
         os.mkdir('GIF')
     except IOError:
         print("Error occurred creating output folder")
-    #         return
+        return
     currPath = pathlib.Path().absolute()
     clipsDir = os.path.join(currPath, 'clips')
     saveDir = os.path.join(currPath, 'GIF')
@@ -60,6 +60,7 @@ def main():
         make_gif(clipPath, savePath)
         cnt += 1
     cv2.destroyAllWindows()
+    input('按任意鍵結束')
     
 if __name__ == "__main__":
     main()

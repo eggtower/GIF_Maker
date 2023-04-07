@@ -60,7 +60,7 @@ def main():
         make_gif(clipPath, savePath)
         cnt += 1
     cv2.destroyAllWindows()
-    input('按任意鍵結束')
+    input('Press any key to end.')
     
 if __name__ == "__main__":
     main()

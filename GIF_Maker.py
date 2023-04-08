@@ -9,7 +9,10 @@ def make_gif(clipPath, savePath, q):
     frameList = list()
     
     clip = cv2.VideoCapture(clipPath)
+
     fps = clip.get(5)
+    duration = 1000/fps*q if 1000/fps*q > 20 else 20
+
     width, height = clip.get(3), clip.get(4)
     reSize = (int(width/height*450), 450) # reshape, fixed height 450
     
@@ -20,19 +23,21 @@ def make_gif(clipPath, savePath, q):
             
         if frameCnt%q==0:
             frame = cv2.resize(frame, reSize)
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+
             # OpenCV uses BGR and PIL uses RGB channels.
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             # Convert to a format that PIL can handle
-            frame = Image.fromarray(np.uint8(frame))
-            frame = ImageEnhance.Brightness(frame).enhance(1.006)
-            frame = ImageEnhance.Color(frame).enhance(1.158)
+            frame = Image.fromarray(frame)
+
+            frame = ImageEnhance.Brightness(frame).enhance(1.004)
+            frame = ImageEnhance.Color(frame).enhance(1.36)
             frame = ImageEnhance.Contrast(frame).enhance(1.0)
             frame = ImageEnhance.Sharpness(frame).enhance(1.0)
             frameList.append(frame)
         frameCnt+=1
     clip.release()
-    frameList[0].save(savePath, format="GIF", append_images=frameList[1:],
-                      save_all=True, duration=1000/fps*q, loop=0, disposal=2)
+    frameList[0].save(savePath, format="GIF", optimize=True, append_images=frameList[1:],
+                      save_all=True, duration=duration, loop=0, disposal=2)
                       
 def main():
     if not os.path.exists('clips'):

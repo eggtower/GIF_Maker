@@ -25,15 +25,14 @@ def make_gif(clipPath, savePath, q):
             frame = cv2.resize(frame, reSize)
 
             # OpenCV uses BGR and PIL uses RGB channels.
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
             # Convert to a format that PIL can handle
             frame = Image.fromarray(frame)
-
-            frame = ImageEnhance.Brightness(frame).enhance(1.004)
+            frame = ImageEnhance.Brightness(frame).enhance(1.0)
             frame = ImageEnhance.Color(frame).enhance(1.36)
             frame = ImageEnhance.Contrast(frame).enhance(1.0)
             frame = ImageEnhance.Sharpness(frame).enhance(1.0)
-            frameList.append(frame)
+            frameList.append(frame.convert("RGB"))
         frameCnt+=1
     clip.release()
     frameList[0].save(savePath, format="GIF", optimize=True, append_images=frameList[1:],
